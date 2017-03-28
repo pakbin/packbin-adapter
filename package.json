@@ -1,0 +1,26 @@
+{
+  "name": "proxifact-adapter",
+  "version": "0.0.1",
+  "description": "Proxifact generic adapter",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "tslint src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "npm run lint",
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "proxifact",
+    "adapter",
+    "artifact",
+    "registry",
+    "repository"
+  ],
+  "author": "Michael de Wit <mjwwit@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^7.0.12",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.2"
+  }
+}
