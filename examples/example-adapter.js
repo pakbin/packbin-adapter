@@ -23,7 +23,7 @@ dockerAdapter.router.use((req, res, next) => {
     const [ username, password ] = Buffer.from(value, 'base64').toString().split(':');
     dockerAdapter.authenticate(username, password)
         .then(user => {
-            if(!user) return res.sendStatus(401);
+            if(!user) return res.set('WWW-Authenticate', 'Basic realm="Private Docker Registry"').sendStatus(401);
             req.user = user;
             next();
         })

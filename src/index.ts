@@ -12,13 +12,15 @@ export type User = {
 };
 
 export default class ProxifactAdapter {
-    public router:Express.Application;
+    public router:express.Router;
 
     public _authenticationCallback:(username:string, password:string) => Promise<User> = null;
     public _authorizationCallback:(registryType:string, operation:string, owner?:string, group?:string, uuid?:string) => Promise<boolean> = null;
 
     constructor(private registryType:string, public requestFilter:RequestFilterDefinition) {
         this.router = express.Router();
+
+        // TODO: Allow configuration settings to be passed
     }
 
     authenticate(username:string, password:string):Promise<User> {
