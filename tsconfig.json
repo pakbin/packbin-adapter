@@ -15,7 +15,8 @@
       "es2017"
     ],
     "types": [
-      "node"
+      "node",
+      "express"
     ]
   },
   "include": [

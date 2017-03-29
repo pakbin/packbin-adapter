@@ -1,4 +1,8 @@
+.vscode/
+examples/
 src/
+test/
 .editorconfig
 tsconfig.json
 tslint.json
+wallaby.js
