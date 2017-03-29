@@ -4,6 +4,12 @@ Download this module on [npm](https://npmjs.org/packages/proxifact-adapter)!
 ## Description
 The `proxifact-adapter` module allows you to integrate a custom artifact registry/repository for [Proxifact]().
 
+## Installation
+Simply:
+```javascript
+npm install --save proxifact-adapter
+```
+
 ## Usage
 Proxifact adapters work as plugins for the main service. This benefits code separation and easy of integration. A custom adapter is loaded by the main Proxifact service through a user-defined configuration file. It then lets the main service know how to identify requests designated for its registry/repository. It does so by providing a number of regular expressions that will test various attributes of a request. For example:
 
@@ -61,7 +67,7 @@ dockerAdapter.router.use((req, res, next) => {
     dockerAdapter.authenticate(username, password)
         .then(user => {
             if(!user) return res.sendStatus(401);
-            
+
             // Store the retrieved user in the Request object
             req.user = user;
             next();
@@ -115,3 +121,9 @@ dockerAdapter.router.use('/v2/:owner/:image', (req, res, next) => {
     });
 });
 ```
+
+## Browsable repositories
+TODO: Register functions to allow browsing the registry/repository from the proxifact web GUI
+
+## Adapter settings and configuration
+TODO: Allow configuration objects to define settings for the adapter
