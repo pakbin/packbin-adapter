@@ -11,7 +11,7 @@ export type User = {
     emailAddress?:string;
 };
 
-export class ProxifactAdapter {
+export class PackbinAdapter {
     public router:express.Router;
 
     public _authenticationCallback:(username:string, password:string) => Promise<User> = null;

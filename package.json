@@ -1,7 +1,7 @@
 {
-  "name": "proxifact-adapter",
+  "name": "packbin-adapter",
   "version": "0.0.1",
-  "description": "Proxifact generic adapter",
+  "description": "Packbin generic adapter",
   "main": "dist/index.js",
   "scripts": {
     "lint": "tslint src",
@@ -14,10 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.mstack.net/proxifact/adapter.git"
+    "url": "https://git.mstack.net/packbin/adapter.git"
   },
   "keywords": [
-    "proxifact",
+    "packbin",
     "adapter",
     "artifact",
     "registry",

@@ -1,17 +1,17 @@
-# proxifact-adapter
-Download this module on [npm](https://npmjs.org/packages/proxifact-adapter)!
+# packbin-adapter
+Download this module on [npm](https://npmjs.org/packages/packbin-adapter)!
 
 ## Description
-The `proxifact-adapter` module allows you to integrate a custom artifact registry/repository for [Proxifact]().
+The `packbin-adapter` module allows you to integrate a custom artifact registry/repository for [Packbin](https://packbin.io/).
 
 ## Installation
 Simply:
 ```javascript
-npm install --save proxifact-adapter
+npm install --save packbin-adapter
 ```
 
 ## Usage
-Proxifact adapters work as plugins for the main service. This benefits code separation and easy of integration. A custom adapter is loaded by the main Proxifact service through a user-defined configuration file. It then lets the main service know how to identify requests designated for its registry/repository. It does so by providing a number of regular expressions that will test various attributes of a request. For example:
+Packbin adapters work as plugins for the main service. This benefits code separation and easy of integration. A custom adapter is loaded by the main Packbin service through a user-defined configuration file. It then lets the main service know how to identify requests designated for its registry/repository. It does so by providing a number of regular expressions that will test various attributes of a request. For example:
 
 ```javascript
 // This will match requests for a Docker v2 registry
@@ -27,10 +27,10 @@ const filters = {
 An incoming request will need to match all specified filters for it to be routed to the adapter. The first adapter with matching filters will be handling the request, so make sure to be very specific!
 
 ## Handling requests
-Proxifact will send any requests coming from a client to the first registered adapter to match all specified filters. It is entirely up to the adapter to come up with an appropriate response. The adapter can handle the response entirely, or proxy the request, delegating it to another (external) service. To allow for this behavior, the `proxifact-adapter` module exposes an [Express 4.x](expressjs.com) Router on the `router` attribute.
+Packbin will send any requests coming from a client to the first registered adapter to match all specified filters. It is entirely up to the adapter to come up with an appropriate response. The adapter can handle the response entirely, or proxy the request, delegating it to another (external) service. To allow for this behavior, the `packbin-adapter` module exposes an [Express 4.x](expressjs.com) Router on the `router` attribute.
 
 ```javascript
-const Adapter = require('proxifact-adapter');
+const Adapter = require('packbin-adapter');
 
 const dockerAdapter = new Adapter('docker', filters);
 
@@ -43,16 +43,16 @@ module.exports = dockerAdapter;
 ```
 
 ### Authenticating and Authorizing requests
-The Proxifact main service contains all the user and acl data, but authentication and authorization of requests requires help from the adapter.
+The Packbin main service contains all the user and acl data, but authentication and authorization of requests requires help from the adapter.
 
 #### Authentication
-For authentication, the `profixact-adapter` module offers the `Adapter.authenticate()` function:
+For authentication, the `packbin-adapter` module offers the `Adapter.authenticate()` function:
 
 ```javascript
 Adapter.authenticate(username, password)
 ```
 
-This function will contact the main Proxifact service to try and authenticate the request using the given `username` and `password`. For example:
+This function will contact the main Packbin service to try and authenticate the request using the given `username` and `password`. For example:
 
 ```javascript
 ...
@@ -123,7 +123,7 @@ dockerAdapter.router.use('/v2/:owner/:image', (req, res, next) => {
 ```
 
 ## Browsable repositories
-TODO: Register functions to allow browsing the registry/repository from the proxifact web GUI
+TODO: Register functions to allow browsing the registry/repository from the Packbin web GUI
 
 ## Adapter settings and configuration
 TODO: Allow configuration objects to define settings for the adapter

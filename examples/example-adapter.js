@@ -1,4 +1,4 @@
-const Adapter = require('proxifact-adapter');
+const Adapter = require('packbin-adapter').PackbinAdapter;
 
 const dockerAdapter = new Adapter('docker', {
     methodFilter: /^(GET|PUT|POST|DELETE|PATCH)$/,

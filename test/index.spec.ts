@@ -7,7 +7,7 @@ const proxyquire = noCallThru();
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Proxifact Adapter', () => {
+describe('Packbin Adapter', () => {
   let express,
       expressMock,
       Adapter;
@@ -21,7 +21,7 @@ describe('Proxifact Adapter', () => {
     proxyquire('../src/index', {
       'express': express
     });
-    Adapter = require('../src/index').ProxifactAdapter;
+    Adapter = require('../src/index').PackbinAdapter;
   });
 
   afterEach(() => {
