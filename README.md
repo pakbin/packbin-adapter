@@ -78,6 +78,20 @@ dockerAdapter.router.use((req, res, next) => {
 });
 ```
 
+Should you want to authenticate with a token, you should first generate a token for the user:
+
+```javascript
+Adapter.getTokenForUser(username, password);
+```
+
+Internally, this will generate a new token for the specified user provided the given credentials are correct. The function will return a token in the form `Promise<string>`. To authenticate requests with a token, use:
+
+```javascript
+Adapter.authenticateWithToken(token);
+```
+
+This function will return `Promise<User>`.
+
 #### Authorization
 To authorize a request, the adapter will need to specify a few properties of the request:
 

@@ -55,10 +55,12 @@ describe('Packbin Adapter', () => {
       adapter = new Adapter('test', {});
     });
 
-    it('should call the authenticationCallback', () => {
+    it('should call the Packbin authenticate function', () => {
       const authCb = sinon.spy(() => 'promise');
 
-      adapter._authenticationCallback = authCb;
+      adapter._packbin = {
+          authenticate: authCb
+      };
 
       const result = adapter.authenticate('foo', 'bar');
       expect(authCb).to.have.been.calledOnce;
@@ -66,15 +68,43 @@ describe('Packbin Adapter', () => {
       expect(result).to.equal('promise');
     });
 
-    it('should call the authorizationCallback', () => {
+    it('should call the Packbin authenticateWithToken function', () => {
+        const authCb = sinon.spy(() => 'promise');
+
+        adapter._packbin = {
+            authenticateWithToken: authCb
+        };
+
+        const result = adapter.authenticateWithToken('some-token');
+        expect(authCb).to.have.been.calledOnce;
+        expect(authCb).to.have.been.calledWith('test', 'some-token');
+        expect(result).to.equal('promise');
+    });
+
+    it('should call the Packbin authorize function', () => {
       const authCb = sinon.spy(() => 'promise');
 
-      adapter._authorizationCallback = authCb;
+      adapter._packbin = {
+          authorize: authCb
+      };
 
-      const result = adapter.authorize('list', 'foo', 'bar', 'baz');
+      const result = adapter.authorize({username: 'foo'}, 'list', 'foo', 'bar', 'baz');
       expect(authCb).to.have.been.calledOnce;
-      expect(authCb).to.have.been.calledWith('test', 'list', 'foo', 'bar', 'baz');
+      expect(authCb).to.have.been.calledWith({username: 'foo'}, 'test', 'list', 'foo', 'bar', 'baz');
       expect(result).to.equal('promise');
+    });
+
+    it('should call the Packbin generateAuthToken function', () => {
+        const authCb = sinon.spy(() => 'promise');
+
+        adapter._packbin = {
+            generateAuthToken: authCb
+        };
+
+        const result = adapter.getTokenForUser('foo', 'bar');
+        expect(authCb).to.have.been.calledOnce;
+        expect(authCb).to.have.been.calledWith('test', 'foo', 'bar');
+        expect(result).to.equal('promise');
     });
   })
 });

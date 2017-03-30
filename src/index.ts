@@ -11,11 +11,22 @@ export type User = {
     emailAddress?:string;
 };
 
+export interface PackbinInterface {
+    authenticate(username:string, password:string):Promise<User>;
+    authenticateWithToken(registryType:string, token:string):Promise<User>;
+    authorize(user:User, registryType:string, operation:string, owner?:string, group?:string, uuid?:string):Promise<boolean>;
+    generateAuthToken(registryType:string, username:string, password:string):Promise<string>;
+}
+
 export class PackbinAdapter {
     public router:express.Router;
 
-    public _authenticationCallback:(username:string, password:string) => Promise<User> = null;
-    public _authorizationCallback:(registryType:string, operation:string, owner?:string, group?:string, uuid?:string) => Promise<boolean> = null;
+    public _packbin:PackbinInterface = {
+        authenticate: null,
+        authenticateWithToken: null,
+        authorize: null,
+        generateAuthToken: null
+    };
 
     constructor(private registryType:string, public requestFilter:RequestFilterDefinition) {
         this.router = express.Router();
@@ -24,11 +35,19 @@ export class PackbinAdapter {
     }
 
     authenticate(username:string, password:string):Promise<User> {
-        return this._authenticationCallback(username, password);
+        return this._packbin.authenticate(username, password);
     }
 
-    authorize(operation:string, owner?:string, group?:string, uuid?:string):Promise<boolean> {
-        return this._authorizationCallback(this.registryType, operation, owner, group, uuid);
+    authenticateWithToken(token:string):Promise<User> {
+        return this._packbin.authenticateWithToken(this.registryType, token);
+    }
+
+    authorize(user:User, operation:string, owner?:string, group?:string, uuid?:string):Promise<boolean> {
+        return this._packbin.authorize(user, this.registryType, operation, owner, group, uuid);
+    }
+
+    getTokenForUser(username:string, password:string):Promise<string> {
+        return this._packbin.generateAuthToken(this.registryType, username, password);
     }
 
     // TODO: Add browsing callback register functions (to support browsing the registry/repository with the web UI)
