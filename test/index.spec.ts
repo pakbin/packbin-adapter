@@ -1,3 +1,4 @@
+/// <reference types="mocha" />
 import { noCallThru } from 'proxyquire';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
@@ -27,7 +28,7 @@ describe('Packbin Adapter', () => {
   afterEach(() => {
     expressMock.verify();
     delete require.cache[require.resolve('../src/index')];
-  })
+  });
 
   it('should construct an adapter', () => {
     const filter = {};

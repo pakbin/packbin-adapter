@@ -141,3 +141,31 @@ TODO: Register functions to allow browsing the registry/repository from the Pack
 
 ## Adapter settings and configuration
 TODO: Allow configuration objects to define settings for the adapter
+
+## Proxying requests
+A very important feature of Packbin is its ability to proxy certain requests to an external service. This allows the service to function as a private artifact/package registry, but also as a mirror to the public registry. In order to make proxying easier for adapter developers, the `packbin-adapter` module provides an easy way to proxy HTTP requests:
+
+```javascript
+const Adapter = require('packbin-adapter');
+const npmAdapter = new Adapter('npm', filters);
+
+const npmProxy = npmAdapter.createProxyTo('https://registry.npmjs.org');
+
+npmProxy.on('proxyReq', proxyReq => {
+    // Remove token for public registry requests
+    delete proxyReq.headers['authorization'];
+    delete proxyReq.headers['Authorization'];
+});
+
+npmAdapter.router.get('/:package', (req, res) => {
+    if(params.package.startsWith('@yourCompany/')) {
+        // Handle private package
+        return;
+    }
+    
+    // Proxy to the central npm registry
+    npmProxy.proxyRequest(req, res);
+});
+
+module.exports = dockerAdapter;
+```

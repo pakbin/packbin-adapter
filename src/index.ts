@@ -1,4 +1,7 @@
+import { request } from 'http';
+import { parse } from 'url';
 import * as express from 'express';
+import ProxyServer from './proxy';
 
 export type RequestFilterDefinition = {
     methodFilter: RegExp;
@@ -48,6 +51,11 @@ export class PackbinAdapter {
 
     getTokenForUser(username:string, password:string):Promise<string> {
         return this._packbin.generateAuthToken(this.registryType, username, password);
+    }
+
+    createProxyTo(target:string, rewriteHostHeader=true) {
+        const targetURI = parse(target);
+        return new ProxyServer(targetURI, rewriteHostHeader);
     }
 
     // TODO: Add browsing callback register functions (to support browsing the registry/repository with the web UI)
