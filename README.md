@@ -1,8 +1,7 @@
 # packbin-adapter
-Download this module on [npm](https://npmjs.org/packages/packbin-adapter)!
 
 ## Description
-The `packbin-adapter` module allows you to integrate a custom artifact registry/repository for [Packbin](https://packbin.io/).
+The `packbin-adapter` module allows you to integrate a custom artifact registry/repository for [Packbin](https://github.com/packbinjs/packbin/).
 
 ## Installation
 Simply:
@@ -162,7 +161,7 @@ npmAdapter.router.get('/:package', (req, res) => {
         // Handle private package
         return;
     }
-    
+
     // Proxy to the central npm registry
     npmProxy.proxyRequest(req, res);
 });
